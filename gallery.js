@@ -1,6 +1,6 @@
 const realImages = [
   "img1.jpeg","img2.jpeg","img3.jpeg","img4.jpeg","img5.jpeg",
-  "img6.jpeg","img7.jpeg","img8.jpeg","img9.jpeg","img10.jpeg"
+  "img6.jpeg","img7.jpeg","img8.jpeg","img9.jpeg","img10.jpeg","img11.jpeg"
 ];
 
 const aiImages = [
@@ -8,7 +8,7 @@ const aiImages = [
 ];
 
 const realVideos = [
-  "real1.mp4","real2.mp4","real3.mp4","real4.mp4","real5.mp4"
+  "real1.mp4","real2.mp4","real3.mp4","real4.mp4","real5.mp4","real6.mp4"
 ];
 
 const aiVideos = [
