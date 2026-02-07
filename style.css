@@ -32,7 +32,16 @@ header h1 {
 }
 
 section {
-  padding: 25px;
+  padding: 18px;
+  margin: 0;
+}
+
+section h2 {
+  margin: 0 0 12px;
+}
+
+section p {
+  margin: 0 0 10px;
 }
 
 .gallery {
@@ -118,4 +127,14 @@ footer {
   text-align: center;
   background: #00000000;
   padding: 10px;
+}
+
+footer a {
+  color: #7b0000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
