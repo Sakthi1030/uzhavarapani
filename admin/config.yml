@@ -5,43 +5,53 @@ backend:
 media_folder: "assets"
 public_folder: "/assets"
 
+media_library:
+  name: "uploadcare"
+  config:
+    publicKey: "demopublickey"
+
 collections:
-  - name: "real_images"
-    label: "Real Images"
-    folder: "uploads/real-images"
-    create: true
-    slug: "{{filename}}"
-    media_folder: "assets/real-images"
-    public_folder: "/assets/real-images"
-    fields:
-      - { label: "Image", name: "file", widget: "image" }
-
-  - name: "ai_images"
-    label: "AI Images"
-    folder: "uploads/ai-images"
-    create: true
-    slug: "{{filename}}"
-    media_folder: "assets/ai-images"
-    public_folder: "/assets/ai-images"
-    fields:
-      - { label: "Image", name: "file", widget: "image" }
-
-  - name: "real_videos"
-    label: "Real Videos"
-    folder: "uploads/real-videos"
-    create: true
-    slug: "{{filename}}"
-    media_folder: "assets/real-videos"
-    public_folder: "/assets/real-videos"
-    fields:
-      - { label: "Video", name: "file", widget: "file" }
-
-  - name: "ai_videos"
-    label: "AI Videos"
-    folder: "uploads/ai-videos"
-    create: true
-    slug: "{{filename}}"
-    media_folder: "assets/ai-videos"
-    public_folder: "/assets/ai-videos"
-    fields:
-      - { label: "Video", name: "file", widget: "file" }
+  - name: "media_manifest"
+    label: "Media Manifest"
+    files:
+      - name: "gallery"
+        label: "Gallery Media"
+        file: "data/media.json"
+        format: "json"
+        fields:
+          - label: "Real Images"
+            name: "realImages"
+            widget: "list"
+            field:
+              label: "Image"
+              name: "file"
+              widget: "image"
+              media_folder: "/assets/real-images"
+              public_folder: "/assets/real-images"
+          - label: "AI Images"
+            name: "aiImages"
+            widget: "list"
+            field:
+              label: "Image"
+              name: "file"
+              widget: "image"
+              media_folder: "/assets/ai-images"
+              public_folder: "/assets/ai-images"
+          - label: "Real Videos"
+            name: "realVideos"
+            widget: "list"
+            field:
+              label: "Video"
+              name: "file"
+              widget: "file"
+              media_folder: "/assets/real-videos"
+              public_folder: "/assets/real-videos"
+          - label: "AI Videos"
+            name: "aiVideos"
+            widget: "list"
+            field:
+              label: "Video"
+              name: "file"
+              widget: "file"
+              media_folder: "/assets/ai-videos"
+              public_folder: "/assets/ai-videos"

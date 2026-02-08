@@ -18,7 +18,7 @@ function loadImages(folder, list, targetId) {
   const container = document.getElementById(targetId);
   list.forEach(file => {
     const img = document.createElement("img");
-    img.src = `assets/${folder}/${file}`;
+    img.src = resolveAssetPath(folder, file);
     img.loading = "lazy";
     container.appendChild(img);
   });
@@ -28,7 +28,7 @@ function loadVideos(folder, list, targetId) {
   const container = document.getElementById(targetId);
   list.forEach(file => {
     const video = document.createElement("video");
-    video.src = `assets/${folder}/${file}`;
+    video.src = resolveAssetPath(folder, file);
     video.controls = true;
     video.playsInline = true;
     video.preload = "metadata";
@@ -42,6 +42,14 @@ loadManifest().then((data) => {
   loadVideos("real-videos", data.realVideos || [], "realVideos");
   loadVideos("ai-videos", data.aiVideos || [], "aiVideos");
 });
+
+function resolveAssetPath(folder, file) {
+  if (!file) return "";
+  if (/^(https?:)?\/\//.test(file)) return file;
+  if (file.startsWith("/")) return file;
+  if (file.includes("/")) return `/${file}`;
+  return `assets/${folder}/${file}`;
+}
 
 /* ---------- LIGHTBOX ---------- */
 
