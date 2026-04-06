@@ -44,6 +44,71 @@ section p {
   margin: 0 0 10px;
 }
 
+.links-area {
+  background: #fffdfa;
+  border-radius: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(123, 0, 0, 0.12);
+}
+
+.links-area h2 {
+  margin: 0 0 18px;
+  font-size: 1.25rem;
+  letter-spacing: 0.2px;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.resource-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(123, 0, 0, 0.08);
+  min-height: 260px;
+}
+
+.resource-card h3 {
+  margin: 0 0 14px;
+  color: #7b0000;
+  font-size: 1.1rem;
+}
+
+.resource-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.resource-card li {
+  margin-bottom: 12px;
+  line-height: 1.65;
+}
+
+.resource-card li:last-child {
+  margin-bottom: 0;
+}
+
+.resource-card a {
+  color: #7b0000;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.resource-card a:hover {
+  color: #c22a2a;
+  transform: translateX(3px);
+}
+
+@media (max-width: 860px) {
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
