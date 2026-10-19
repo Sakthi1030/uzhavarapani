@@ -2,14 +2,21 @@ backend:
   name: git-gateway
   branch: main
 
-media_folder: "assets"
-public_folder: "/assets"
+# Uploads are committed straight into the repo (Decap's built-in media library).
+# The old Uploadcare "demopublickey" setup rejected many file types and deleted files after 24h.
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
 
-media_library:
-  name: "uploadcare"
-  config:
-    publicKey: "demopublickey"
+site_url: "/"
+display_url: "/"
+logo_url: "/header%20pic/head.jpeg"
 
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# Paths starting with "/" are relative to the repo root (without it Decap puts files next to data/media.json).
 collections:
   - name: "media_manifest"
     label: "Media Manifest"
@@ -19,39 +26,55 @@ collections:
         file: "data/media.json"
         format: "json"
         fields:
-          - label: "Real Images"
+          - label: "Real Images (Photos)"
             name: "realImages"
             widget: "list"
             field:
-              label: "Image"
+              label: "File"
               name: "file"
-              widget: "image"
-              media_folder: "assets/real-images"
+              widget: "file"
+              hint: "Any format (jpg, png, webp, heic, mp4, mov, pdf...) up to 10 MB."
+              media_folder: "/assets/real-images"
               public_folder: "/assets/real-images"
+              media_library:
+                config:
+                  max_file_size: 10485760
           - label: "AI Images"
             name: "aiImages"
             widget: "list"
             field:
-              label: "Image"
+              label: "File"
               name: "file"
-              widget: "image"
-              media_folder: "assets/ai-images"
+              widget: "file"
+              hint: "Any format up to 10 MB."
+              media_folder: "/assets/ai-images"
               public_folder: "/assets/ai-images"
+              media_library:
+                config:
+                  max_file_size: 10485760
           - label: "Real Videos"
             name: "realVideos"
             widget: "list"
             field:
-              label: "Video"
+              label: "File"
               name: "file"
               widget: "file"
-              media_folder: "assets/real-videos"
+              hint: "Any format (mp4, mov, webm...) up to 10 MB."
+              media_folder: "/assets/real-videos"
               public_folder: "/assets/real-videos"
+              media_library:
+                config:
+                  max_file_size: 10485760
           - label: "AI Videos"
             name: "aiVideos"
             widget: "list"
             field:
-              label: "Video"
+              label: "File"
               name: "file"
               widget: "file"
-              media_folder: "assets/ai-videos"
+              hint: "Any format up to 10 MB."
+              media_folder: "/assets/ai-videos"
               public_folder: "/assets/ai-videos"
+              media_library:
+                config:
+                  max_file_size: 10485760

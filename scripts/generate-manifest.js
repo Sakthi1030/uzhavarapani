@@ -6,21 +6,36 @@ const assetsDir = path.join(rootDir, "assets");
 const outputDir = path.join(rootDir, "data");
 const outputFile = path.join(outputDir, "media.json");
 
+// Any file format is accepted; the gallery decides how to show it from the extension.
 const folders = {
-  realImages: { dir: "real-images", exts: [".jpg", ".jpeg", ".png", ".webp"] },
-  aiImages: { dir: "ai-images", exts: [".jpg", ".jpeg", ".png", ".webp"] },
-  realVideos: { dir: "real-videos", exts: [".mp4", ".webm", ".ogg"] },
-  aiVideos: { dir: "ai-videos", exts: [".mp4", ".webm", ".ogg"] }
+  realImages: { dir: "real-images" },
+  aiImages: { dir: "ai-images" },
+  realVideos: { dir: "real-videos" },
+  aiVideos: { dir: "ai-videos" }
 };
 
-function listFiles(folderPath, exts) {
+const IGNORED_EXTS = [".md", ".json", ".yml", ".yaml", ".txt", ".db", ".ini"];
+
+function listFiles(folderPath) {
   if (!fs.existsSync(folderPath)) return [];
   return fs
     .readdirSync(folderPath, { withFileTypes: true })
     .filter((entry) => entry.isFile())
     .map((entry) => entry.name)
-    .filter((name) => exts.includes(path.extname(name).toLowerCase()))
+    .filter((name) => !name.startsWith("."))
+    .filter((name) => !IGNORED_EXTS.includes(path.extname(name).toLowerCase()))
     .sort((a, b) => a.localeCompare(b, "en"));
+}
+
+// The CMS stores uploads as "/assets/<dir>/<name>"; reduce those to "<name>" so they
+// are not listed twice (once from the folder scan, once from the CMS entry).
+function normalizeEntry(item, dir) {
+  if (typeof item !== "string") return item;
+  const prefix = `/assets/${dir}/`;
+  if (item.startsWith(prefix) && !item.slice(prefix.length).includes("/")) {
+    return item.slice(prefix.length);
+  }
+  return item;
 }
 
 function readExistingManifest() {
@@ -42,25 +57,28 @@ function isLocalFilename(value) {
   return true;
 }
 
-function mergeEntries(localFiles, existingList) {
+// Keeps the order set in the CMS, drops entries whose local file is gone,
+// then appends any files found in the folder that the CMS list doesn't have yet.
+function mergeEntries(localFiles, existingList, dir) {
   const result = [];
   const seen = new Set();
+  const local = new Set(localFiles);
 
-  localFiles.forEach((item) => {
-    if (seen.has(item)) return;
+  const add = (item) => {
+    if (!item || seen.has(item)) return;
     seen.add(item);
     result.push(item);
-  });
+  };
 
   if (Array.isArray(existingList)) {
-    existingList.forEach((item) => {
-      if (isLocalFilename(item)) return;
-      if (seen.has(item)) return;
-      seen.add(item);
-      result.push(item);
+    existingList.forEach((raw) => {
+      const item = normalizeEntry(raw, dir);
+      if (isLocalFilename(item) && !local.has(item)) return;
+      add(item);
     });
   }
 
+  localFiles.forEach(add);
   return result;
 }
 
@@ -69,9 +87,9 @@ const manifest = {};
 
 for (const [key, value] of Object.entries(folders)) {
   const folderPath = path.join(assetsDir, value.dir);
-  const localFiles = listFiles(folderPath, value.exts);
+  const localFiles = listFiles(folderPath);
   const existingList = existingManifest[key] || [];
-  manifest[key] = mergeEntries(localFiles, existingList);
+  manifest[key] = mergeEntries(localFiles, existingList, value.dir);
 }
 
 if (!fs.existsSync(outputDir)) {
