@@ -1,3 +1,13 @@
 [build]
   command = "node scripts/generate-manifest.js"
   publish = "."
+
+[build.environment]
+  # Videos are stored with Git LFS on GitHub; without this Netlify deploys the
+  # 130-byte LFS pointer files instead of the real videos.
+  GIT_LFS_ENABLED = "true"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

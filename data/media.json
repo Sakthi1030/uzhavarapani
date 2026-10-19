@@ -1,8 +1,6 @@
 {
   "realImages": [
     "img1.jpeg",
-    "img10.jpeg",
-    "img11.jpeg",
     "img2.jpeg",
     "img3.jpeg",
     "img4.jpeg",
@@ -10,7 +8,10 @@
     "img6.jpeg",
     "img7.jpeg",
     "img8.jpeg",
-    "https://1s4oyld5dc.ucarecd.net/c9f7611f-ac05-4a9f-ad29-3088414a030a/"
+    "img9.jpeg",
+    "img10.jpeg",
+    "img11.jpeg",
+    "whatsapp-image-2026-02-03-at-13.13.12.jpeg"
   ],
   "aiImages": [
     "ai1.jpeg",
@@ -30,13 +31,6 @@
   ],
   "aiVideos": [
     "ai-video1.mp4",
-    "ai-video10.mp4",
-    "ai-video11.mp4",
-    "ai-video12.mp4",
-    "ai-video13.mp4",
-    "ai-video14.mp4",
-    "ai-video15.mp4",
-    "ai-video16.mp4",
     "ai-video2.mp4",
     "ai-video3.mp4",
     "ai-video4.mp4",
@@ -44,6 +38,13 @@
     "ai-video6.mp4",
     "ai-video7.mp4",
     "ai-video8.mp4",
-    "ai-video9.mp4"
+    "ai-video9.mp4",
+    "ai-video10.mp4",
+    "ai-video11.mp4",
+    "ai-video12.mp4",
+    "ai-video13.mp4",
+    "ai-video14.mp4",
+    "ai-video15.mp4",
+    "ai-video16.mp4"
   ]
 }
