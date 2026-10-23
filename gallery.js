@@ -54,6 +54,18 @@ async function loadManifest() {
   }
 }
 
+// Photos added through the /upload/ page (Netlify Blobs), newest first.
+async function loadUploadedPhotos() {
+  try {
+    const response = await fetch("/api/photos", { cache: "no-store" });
+    if (!response.ok) return [];
+    const data = await response.json();
+    return (data.photos || []).map((p) => p.url);
+  } catch (err) {
+    return [];
+  }
+}
+
 /* ---------- GALLERY ---------- */
 
 const lightboxItems = []; // { kind, src } for every image / video on the page
@@ -154,8 +166,8 @@ function renderGallery(targetId, folder, list, fallbackKind) {
   }
 }
 
-loadManifest().then((data) => {
-  renderGallery("realImages", "real-images", data.realImages, "image");
+Promise.all([loadManifest(), loadUploadedPhotos()]).then(([data, uploaded]) => {
+  renderGallery("realImages", "real-images", [...uploaded, ...(data.realImages || [])], "image");
   renderGallery("realVideos", "real-videos", data.realVideos, "video");
   renderGallery("aiImages", "ai-images", data.aiImages, "image");
   renderGallery("aiVideos", "ai-videos", data.aiVideos, "video");
