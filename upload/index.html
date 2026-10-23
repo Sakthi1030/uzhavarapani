@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>புகைப்படம் பதிவேற்றம் | Photo Upload</title>
+  <title>பதிவேற்றம் | Upload</title>
   <link rel="icon" href="/header%20pic/head.jpeg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
         linear-gradient(180deg, var(--maroon-deep), var(--maroon) 260px, var(--sandal) 260px);
       line-height: 1.6;
     }
-    .wrap { width: min(560px, 100% - 32px); margin: 0 auto; padding: 28px 0 48px; }
+    .wrap { width: min(600px, 100% - 32px); margin: 0 auto; padding: 28px 0 48px; }
     header { text-align: center; color: #fff; margin-bottom: 22px; }
     header img {
       width: 76px; height: 76px; border-radius: 50%; object-fit: cover;
@@ -46,11 +46,18 @@
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 18px 40px -20px rgba(61, 6, 6, 0.45);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
-    h2 { margin: 0 0 14px; font-size: 1.1rem; color: var(--maroon); }
+    h2 { margin: 0 0 4px; font-size: 1.12rem; color: var(--maroon); }
+    h2 small { font-weight: 600; color: var(--muted); font-size: 0.82rem; }
+    .sub { margin: 0 0 12px; font-size: 0.85rem; color: var(--muted); }
+    .limit {
+      margin: 0 0 12px; padding: 8px 12px; border-radius: 10px;
+      background: #fff1d6; border: 1px solid var(--gold-soft);
+      font-size: 0.86rem; color: var(--maroon-deep);
+    }
     label { display: block; font-weight: 600; font-size: 0.92rem; margin: 0 0 4px; }
     input[type=text], input[type=password] {
       width: 100%; padding: 12px 14px; margin: 0 0 14px;
@@ -66,35 +73,34 @@
     }
     .btn:disabled { opacity: 0.6; cursor: wait; }
     .btn-gold { background: linear-gradient(180deg, #f0c060, var(--gold)); color: var(--maroon-deep); }
-    .btn-plain { background: transparent; color: var(--maroon); border: 1.5px solid var(--maroon); }
-    .msg { margin: 10px 0 0; font-size: 0.92rem; }
+    .msg { margin: 10px 0 0; font-size: 0.9rem; }
     .msg.err { color: var(--err); }
     .msg.ok { color: var(--ok); }
     .picker {
-      display: block; padding: 28px 16px; text-align: center; cursor: pointer;
-      border: 2px dashed rgba(107, 15, 15, 0.35); border-radius: 16px; background: #fff8ec;
+      display: block; padding: 18px 14px; text-align: center; cursor: pointer; margin: 0;
+      border: 2px dashed rgba(107, 15, 15, 0.35); border-radius: 14px; background: #fff8ec;
     }
-    .picker strong { display: block; font-size: 1.05rem; color: var(--maroon); }
-    .picker span { font-size: 0.85rem; color: var(--muted); }
+    .picker strong { display: block; font-size: 1rem; color: var(--maroon); }
+    .picker span { font-size: 0.82rem; color: var(--muted); font-weight: 400; }
     .picker input { display: none; }
-    .list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+    .list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 12px; }
+    .list:empty { display: none; }
     .item { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #eee2cc; }
-    .item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .item img, .item video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .item .st {
-      position: absolute; inset: auto 0 0 0; padding: 3px 6px;
-      font-size: 0.75rem; font-weight: 700; color: #fff; background: rgba(0, 0, 0, 0.55); text-align: center;
+      position: absolute; inset: auto 0 0 0; padding: 2px 6px;
+      font-size: 0.75rem; font-weight: 700; color: #fff; background: rgba(0, 0, 0, 0.6); text-align: center;
     }
-    .item.done .st { background: rgba(31, 122, 58, 0.9); }
+    .item.done .st { background: rgba(31, 122, 58, 0.92); }
     .item.fail .st { background: rgba(179, 38, 30, 0.92); }
     .item .del {
       position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; border-radius: 50%;
       background: rgba(179, 38, 30, 0.92); color: #fff; font-size: 16px; cursor: pointer;
     }
-    .row { display: flex; gap: 10px; margin-top: 14px; }
-    .row .btn { flex: 1; }
-    .who { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; }
+    .who { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--muted); }
     .who button { border: 0; background: none; color: var(--maroon); font: inherit; font-weight: 700; cursor: pointer; }
-    .hint { font-size: 0.85rem; color: var(--muted); margin: 12px 0 0; }
+    .hint { font-size: 0.85rem; color: var(--muted); margin: 10px 0 0; }
+    .admin h3 { margin: 16px 0 0; font-size: 0.95rem; color: var(--maroon); }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -102,13 +108,13 @@
   <div class="wrap">
     <header>
       <img src="/header%20pic/head.jpeg" alt="">
-      <h1>புகைப்படம் பதிவேற்றம்</h1>
-      <p>அக்கினீஸ்வரர் ஆலயம் · உழவாரபணி குழு · Photo Upload</p>
+      <h1>பதிவேற்றம்</h1>
+      <p>அக்கினீஸ்வரர் ஆலயம் · உழவாரபணி குழு · Upload</p>
     </header>
 
     <!-- LOGIN -->
     <form class="card" id="loginCard" autocomplete="on">
-      <h2>உள்நுழைக / Login</h2>
+      <h2 style="margin-bottom:12px">உள்நுழைக / Login</h2>
       <label for="user">பயனர் பெயர் / Username</label>
       <input type="text" id="user" autocapitalize="none" autocomplete="username" required>
       <label for="pass">கடவுச்சொல் / Password</label>
@@ -117,46 +123,100 @@
       <p class="msg err" id="loginMsg" hidden></p>
     </form>
 
-    <!-- UPLOAD -->
-    <section class="card" id="uploadCard" hidden>
-      <div class="who"><span id="whoLabel"></span><button type="button" id="logout">வெளியேறு / Logout</button></div>
-      <label class="picker">
-        <input type="file" id="files" accept="image/*" multiple>
-        <strong>📷 புகைப்படங்களைத் தேர்ந்தெடுக்கவும்</strong>
-        <span>Tap to choose photos (many at once is fine)</span>
-      </label>
-      <div class="list" id="queue"></div>
-      <p class="msg" id="uploadMsg" hidden></p>
-      <div class="row">
-        <a class="btn btn-gold" href="/#photos">🛕 இணையதளத்தில் பார்க்க / View on site</a>
-      </div>
-      <p class="hint">புகைப்படங்கள் உடனே இணையதளத்தின் "புகைப்படங்கள்" பகுதியில் தோன்றும். Photos appear on the website straight away.</p>
-    </section>
+    <div id="app" hidden>
+      <div class="card who"><span id="whoLabel"></span><button type="button" id="logout">வெளியேறு / Logout</button></div>
 
-    <!-- ADMIN: manage uploaded photos -->
-    <section class="card" id="adminCard" hidden>
-      <h2>பதிவேற்றிய புகைப்படங்கள் / Uploaded photos</h2>
-      <p class="hint" style="margin:0 0 4px">Admin only: tap ✕ to remove a photo from the website.</p>
-      <div class="list" id="manage"></div>
-      <p class="msg" id="manageMsg" hidden></p>
-    </section>
+      <!-- 1. PHOTOS -->
+      <section class="card up" data-section="realImages" data-kind="image">
+        <h2>📸 புகைப்படங்கள் <small>Photos</small></h2>
+        <p class="sub">உழவாரப் பணி, கோவில், கிரிவலம் புகைப்படங்கள்</p>
+        <label class="picker">
+          <input type="file" accept="image/*" multiple>
+          <strong>📷 புகைப்படங்களைத் தேர்ந்தெடுக்கவும்</strong>
+          <span>Tap to choose photos (many at once is fine)</span>
+        </label>
+        <div class="list"></div>
+        <p class="msg" hidden></p>
+      </section>
+
+      <!-- 2. VIDEOS -->
+      <section class="card up" data-section="realVideos" data-kind="video">
+        <h2>🎥 காணொளிகள் <small>Videos</small></h2>
+        <p class="limit">⚠️ ஒரு காணொளி அதிகபட்சம் <b>50 MB</b> மட்டுமே (MP4 / MOV).<br>
+          Max <b>50 MB</b> per video. பெரிய காணொளியை முதலில் WhatsApp-ல் யாருக்காவது அனுப்பினால் அளவு குறையும்; அந்த காணொளியை இங்கே பதிவேற்றவும்.</p>
+        <label class="picker">
+          <input type="file" accept="video/*" multiple>
+          <strong>🎬 காணொளிகளைத் தேர்ந்தெடுக்கவும்</strong>
+          <span>Tap to choose videos</span>
+        </label>
+        <div class="list"></div>
+        <p class="msg" hidden></p>
+      </section>
+
+      <!-- 3. AI PHOTOS -->
+      <section class="card up" data-section="aiImages" data-kind="image">
+        <h2>🌱 AI புகைப்படங்கள் <small>AI photos</small></h2>
+        <p class="sub">"உழவார குழுவின் வருங்கால நோக்கம்" பகுதிக்கு</p>
+        <label class="picker">
+          <input type="file" accept="image/*" multiple>
+          <strong>🖼️ AI புகைப்படங்களைத் தேர்ந்தெடுக்கவும்</strong>
+          <span>Tap to choose AI images</span>
+        </label>
+        <div class="list"></div>
+        <p class="msg" hidden></p>
+      </section>
+
+      <!-- 4. AI VIDEOS -->
+      <section class="card up" data-section="aiVideos" data-kind="video">
+        <h2>🔱 AI காணொளிகள் <small>AI videos</small></h2>
+        <p class="sub">"கிரிவலம் பற்றி உருவாக்கப்பட்ட காணொளிகள்" பகுதிக்கு</p>
+        <p class="limit">⚠️ ஒரு காணொளி அதிகபட்சம் <b>50 MB</b> மட்டுமே (MP4 / MOV). Max <b>50 MB</b> per video.</p>
+        <label class="picker">
+          <input type="file" accept="video/*" multiple>
+          <strong>🎞️ AI காணொளிகளைத் தேர்ந்தெடுக்கவும்</strong>
+          <span>Tap to choose AI videos</span>
+        </label>
+        <div class="list"></div>
+        <p class="msg" hidden></p>
+      </section>
+
+      <a class="btn btn-gold" href="/#photos">🛕 இணையதளத்தில் பார்க்க / View on site</a>
+      <p class="hint">பதிவேற்றியவை உடனே இணையதளத்தில் தோன்றும். Everything appears on the website straight away.</p>
+
+      <!-- ADMIN: manage uploads -->
+      <section class="card admin" id="adminCard" hidden style="margin-top:16px">
+        <h2>🛠️ பதிவேற்றியவை / Manage uploads</h2>
+        <p class="sub">Admin only: tap ✕ to remove from the website.</p>
+        <div id="manage"></div>
+        <p class="msg" id="manageMsg" hidden></p>
+      </section>
+    </div>
   </div>
 
 <script>
 const $ = (id) => document.getElementById(id);
+const MB = 1024 * 1024;
+const VIDEO_MAX = 50 * MB;
+const SECTION_NAMES = {
+  realImages: "📸 புகைப்படங்கள் / Photos",
+  realVideos: "🎥 காணொளிகள் / Videos",
+  aiImages: "🌱 AI புகைப்படங்கள் / AI photos",
+  aiVideos: "🔱 AI காணொளிகள் / AI videos",
+};
 let creds = null;
 let role = null;
 
 function save(key, value) { try { value === null ? sessionStorage.removeItem(key) : sessionStorage.setItem(key, value); } catch (e) {} }
 function load(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
-
-function headers() { return { "x-user": creds.user, "x-pass": creds.pass }; }
+const auth = () => ({ "x-user": creds.user, "x-pass": creds.pass });
 
 function show(el, text, kind) {
   el.textContent = text;
   el.className = "msg" + (kind ? " " + kind : "");
   el.hidden = !text;
 }
+
+/* ---------- Login ---------- */
 
 async function login(user, pass, silent) {
   const btn = $("loginBtn");
@@ -169,7 +229,7 @@ async function login(user, pass, silent) {
     role = data.role;
     save("upl", JSON.stringify(creds));
     $("loginCard").hidden = true;
-    $("uploadCard").hidden = false;
+    $("app").hidden = false;
     $("whoLabel").textContent = "👤 " + user + (role === "admin" ? " (admin)" : "");
     if (role === "admin") { $("adminCard").hidden = false; loadManage(); }
   } catch (err) {
@@ -186,12 +246,9 @@ $("loginCard").addEventListener("submit", (e) => {
   login($("user").value.trim(), $("pass").value, false);
 });
 
-$("logout").onclick = () => {
-  save("upl", null);
-  location.reload();
-};
+$("logout").onclick = () => { save("upl", null); location.reload(); };
 
-/* ---------- Shrink every photo to a JPEG of at most 2048px before sending ---------- */
+/* ---------- Photos: shrink to a JPEG of at most 2048px before sending ---------- */
 
 async function decode(file) {
   if ("createImageBitmap" in window) {
@@ -210,69 +267,131 @@ async function decode(file) {
 
 async function toJpeg(file) {
   const src = await decode(file);
-  const w = src.width, h = src.height;
-  const scale = Math.min(1, 2048 / Math.max(w, h));
+  const scale = Math.min(1, 2048 / Math.max(src.width, src.height));
   const canvas = document.createElement("canvas");
-  canvas.width = Math.round(w * scale);
-  canvas.height = Math.round(h * scale);
+  canvas.width = Math.round(src.width * scale);
+  canvas.height = Math.round(src.height * scale);
   const ctx = canvas.getContext("2d");
   ctx.fillStyle = "#fff";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(src, 0, 0, canvas.width, canvas.height);
   for (const q of [0.85, 0.7, 0.55]) {
     const blob = await new Promise((r) => canvas.toBlob(r, "image/jpeg", q));
-    if (blob && blob.size < 5.5 * 1024 * 1024) return blob;
+    if (blob && blob.size < 5.5 * MB) return blob;
   }
-  throw new Error("too large");
+  throw new Error("Photo too large");
 }
 
-function tile(container, src) {
+/* ---------- Videos: work out the type (some phones leave file.type empty) ---------- */
+
+function videoType(file) {
+  const t = (file.type || "").toLowerCase();
+  if (["video/mp4", "video/quicktime", "video/webm", "video/x-m4v"].includes(t)) return t;
+  const ext = (file.name.split(".").pop() || "").toLowerCase();
+  return { mp4: "video/mp4", mov: "video/quicktime", qt: "video/quicktime", m4v: "video/x-m4v", webm: "video/webm" }[ext] || null;
+}
+
+/* ---------- Upload in chunks ---------- */
+
+async function api(url, opts) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(url, opts);
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401) { save("upl", null); throw Object.assign(new Error("Please log in again"), { fatal: true }); }
+      if (!res.ok) throw Object.assign(new Error(data.error || "Upload failed"), { fatal: res.status < 500 });
+      return data;
+    } catch (err) {
+      if (err.fatal || attempt >= 3) throw err;
+      await new Promise((r) => setTimeout(r, 1500 * attempt));
+    }
+  }
+}
+
+async function sendFile(section, blob, contentType, onProgress) {
+  const startRes = await api("/api/upload/start", {
+    method: "POST",
+    headers: { ...auth(), "Content-Type": "application/json" },
+    body: JSON.stringify({ section, contentType, size: blob.size }),
+  });
+  const { id, chunkSize, chunks } = startRes;
+  for (let n = 0; n < chunks; n++) {
+    const part = blob.slice(n * chunkSize, Math.min(blob.size, (n + 1) * chunkSize));
+    await api(`/api/upload/${id}/${n}`, { method: "PUT", headers: { ...auth(), "Content-Type": "application/octet-stream" }, body: part });
+    onProgress(Math.round(((n + 1) / chunks) * 100));
+  }
+  return api(`/api/upload/${id}/finish`, { method: "POST", headers: auth() });
+}
+
+function tile(container, src, kind) {
   const div = document.createElement("div");
   div.className = "item";
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = "";
+  let media;
+  if (kind === "video") {
+    media = document.createElement("video");
+    media.src = src + "#t=0.1";
+    media.muted = true;
+    media.playsInline = true;
+    media.preload = "metadata";
+  } else {
+    media = document.createElement("img");
+    media.alt = "";
+    media.src = src;
+  }
   const st = document.createElement("div");
   st.className = "st";
-  div.append(img, st);
+  div.append(media, st);
   container.prepend(div);
   return { div, st };
 }
 
-$("files").addEventListener("change", async (e) => {
-  const files = [...e.target.files];
-  e.target.value = "";
-  if (!files.length) return;
-  show($("uploadMsg"), "");
-  let ok = 0, failed = 0;
+document.querySelectorAll(".up").forEach((card) => {
+  const section = card.dataset.section;
+  const kind = card.dataset.kind;
+  const input = card.querySelector("input[type=file]");
+  const list = card.querySelector(".list");
+  const msg = card.querySelector(".msg");
 
-  for (const file of files) {
-    const preview = URL.createObjectURL(file);
-    const t = tile($("queue"), preview);
-    t.st.textContent = "⏳ …";
-    try {
-      const jpeg = await toJpeg(file);
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { ...headers(), "Content-Type": "image/jpeg" },
-        body: jpeg,
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.status === 401) { save("upl", null); throw new Error("Please log in again"); }
-      if (!res.ok) throw new Error(data.error || "Upload failed");
-      t.div.classList.add("done");
-      t.st.textContent = "✓ Added";
-      ok++;
-    } catch (err) {
-      t.div.classList.add("fail");
-      t.st.textContent = err.message === "too large" ? "✕ Too large" : "✕ " + (err.message || "Failed");
-      failed++;
+  input.addEventListener("change", async () => {
+    const files = [...input.files];
+    input.value = "";
+    if (!files.length) return;
+    show(msg, "");
+    let ok = 0;
+    const problems = [];
+
+    for (const file of files) {
+      const t = tile(list, URL.createObjectURL(file), kind);
+      t.st.textContent = "⏳ 0%";
+      try {
+        let blob = file, type;
+        if (kind === "image") {
+          blob = await toJpeg(file);
+          type = "image/jpeg";
+        } else {
+          type = videoType(file);
+          if (!type) throw new Error("MP4 / MOV மட்டும் / Only MP4 or MOV");
+          if (file.size > VIDEO_MAX) throw new Error(`${(file.size / MB).toFixed(0)} MB, 50 MB-க்கு மேல் / Over 50 MB`);
+        }
+        await sendFile(section, blob, type, (p) => (t.st.textContent = `⏳ ${p}%`));
+        t.div.classList.add("done");
+        t.st.textContent = "✓ Added";
+        ok++;
+      } catch (err) {
+        t.div.classList.add("fail");
+        t.st.textContent = "✕ Failed";
+        problems.push(`${file.name}: ${err.message}`);
+      }
     }
-  }
 
-  if (failed) show($("uploadMsg"), `${ok} சேர்க்கப்பட்டது, ${failed} தோல்வி / ${ok} added, ${failed} failed. Try the failed ones again or send them as JPG.`, "err");
-  else show($("uploadMsg"), `✓ ${ok} புகைப்படம் சேர்க்கப்பட்டது / ${ok} photo(s) added`, "ok");
-  if (role === "admin") loadManage();
+    if (problems.length) {
+      show(msg, `${ok} சேர்க்கப்பட்டது, ${problems.length} தோல்வி / ${ok} added, ${problems.length} failed.\n` + problems.join("\n"), "err");
+      msg.style.whiteSpace = "pre-line";
+    } else {
+      show(msg, `✓ ${ok} சேர்க்கப்பட்டது / ${ok} added`, "ok");
+    }
+    if (role === "admin") loadManage();
+  });
 });
 
 /* ---------- Admin: list + delete ---------- */
@@ -280,30 +399,42 @@ $("files").addEventListener("change", async (e) => {
 async function loadManage() {
   const box = $("manage");
   try {
-    const res = await fetch("/api/photos", { cache: "no-store" });
-    const { photos = [] } = await res.json();
+    const res = await fetch("/api/media", { cache: "no-store" });
+    const media = await res.json();
     box.innerHTML = "";
-    if (!photos.length) { show($("manageMsg"), "இன்னும் புகைப்படம் இல்லை / No uploaded photos yet."); return; }
-    show($("manageMsg"), "");
-    photos.slice().reverse().forEach((p) => {
-      const t = tile(box, p.url);
-      t.st.textContent = p.key.slice(6, 8) + "/" + p.key.slice(4, 6) + "/" + p.key.slice(0, 4);
-      const del = document.createElement("button");
-      del.className = "del";
-      del.type = "button";
-      del.textContent = "✕";
-      del.title = "Delete";
-      del.onclick = async () => {
-        if (!confirm("இந்த புகைப்படத்தை நீக்கவா? / Delete this photo from the website?")) return;
-        del.disabled = true;
-        const r = await fetch("/api/photo/" + encodeURIComponent(p.key), { method: "DELETE", headers: headers() });
-        if (r.ok) t.div.remove();
-        else { del.disabled = false; alert("Delete failed"); }
-      };
-      t.div.appendChild(del);
-    });
+    let total = 0;
+    for (const [section, label] of Object.entries(SECTION_NAMES)) {
+      const urls = media[section] || [];
+      if (!urls.length) continue;
+      total += urls.length;
+      const h = document.createElement("h3");
+      h.textContent = `${label} (${urls.length})`;
+      const list = document.createElement("div");
+      list.className = "list";
+      box.append(h, list);
+      const kind = section.endsWith("Videos") ? "video" : "image";
+      urls.slice().reverse().forEach((url) => {
+        const name = url.split("/").pop();
+        const t = tile(list, url, kind);
+        t.st.textContent = name.slice(6, 8) + "/" + name.slice(4, 6) + "/" + name.slice(0, 4);
+        const del = document.createElement("button");
+        del.className = "del";
+        del.type = "button";
+        del.textContent = "✕";
+        del.title = "Delete";
+        del.onclick = async () => {
+          if (!confirm("இதை நீக்கவா? / Delete this from the website?")) return;
+          del.disabled = true;
+          const r = await fetch(url, { method: "DELETE", headers: auth() });
+          if (r.ok) t.div.remove();
+          else { del.disabled = false; alert("Delete failed"); }
+        };
+        t.div.appendChild(del);
+      });
+    }
+    show($("manageMsg"), total ? "" : "இன்னும் எதுவும் இல்லை / Nothing uploaded yet.");
   } catch (err) {
-    show($("manageMsg"), "Could not load photos.", "err");
+    show($("manageMsg"), "Could not load uploads.", "err");
   }
 }
 

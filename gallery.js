@@ -54,15 +54,14 @@ async function loadManifest() {
   }
 }
 
-// Photos added through the /upload/ page (Netlify Blobs), newest first.
-async function loadUploadedPhotos() {
+// Files added through the /upload/ page (Netlify Blobs), newest first, per section.
+async function loadUploads() {
   try {
-    const response = await fetch("/api/photos", { cache: "no-store" });
-    if (!response.ok) return [];
-    const data = await response.json();
-    return (data.photos || []).map((p) => p.url);
+    const response = await fetch("/api/media", { cache: "no-store" });
+    if (!response.ok) return {};
+    return await response.json();
   } catch (err) {
-    return [];
+    return {};
   }
 }
 
@@ -166,11 +165,12 @@ function renderGallery(targetId, folder, list, fallbackKind) {
   }
 }
 
-Promise.all([loadManifest(), loadUploadedPhotos()]).then(([data, uploaded]) => {
-  renderGallery("realImages", "real-images", [...uploaded, ...(data.realImages || [])], "image");
-  renderGallery("realVideos", "real-videos", data.realVideos, "video");
-  renderGallery("aiImages", "ai-images", data.aiImages, "image");
-  renderGallery("aiVideos", "ai-videos", data.aiVideos, "video");
+Promise.all([loadManifest(), loadUploads()]).then(([data, up]) => {
+  const merge = (key) => [...(up[key] || []), ...(data[key] || [])];
+  renderGallery("realImages", "real-images", merge("realImages"), "image");
+  renderGallery("realVideos", "real-videos", merge("realVideos"), "video");
+  renderGallery("aiImages", "ai-images", merge("aiImages"), "image");
+  renderGallery("aiVideos", "ai-videos", merge("aiVideos"), "video");
 });
 
 /* ---------- LIGHTBOX ---------- */
