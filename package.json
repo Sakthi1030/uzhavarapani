@@ -1,0 +1,8 @@
+{
+  "name": "uzhavarapani",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^11.1.6",
+    "@netlify/functions": "^6.0.3"
+  }
+}

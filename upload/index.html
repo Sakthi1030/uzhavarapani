@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>புகைப்படம் பதிவேற்றம் | Photo Upload</title>
+  <link rel="icon" href="/header%20pic/head.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600;700&family=Noto+Serif+Tamil:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --maroon: #6b0f0f;
+      --maroon-deep: #3d0606;
+      --gold: #d9a441;
+      --gold-soft: #f3d9a4;
+      --sandal: #fbf3e4;
+      --card: #fffdf8;
+      --ink: #2b1a12;
+      --muted: #7a6656;
+      --line: rgba(107, 15, 15, 0.14);
+      --ok: #1f7a3a;
+      --err: #b3261e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans Tamil", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at top, rgba(232, 115, 28, 0.25), transparent 55%),
+        linear-gradient(180deg, var(--maroon-deep), var(--maroon) 260px, var(--sandal) 260px);
+      line-height: 1.6;
+    }
+    .wrap { width: min(560px, 100% - 32px); margin: 0 auto; padding: 28px 0 48px; }
+    header { text-align: center; color: #fff; margin-bottom: 22px; }
+    header img {
+      width: 76px; height: 76px; border-radius: 50%; object-fit: cover;
+      border: 3px solid var(--gold); box-shadow: 0 0 40px rgba(232, 115, 28, 0.5);
+    }
+    header h1 { margin: 10px 0 2px; font-family: "Noto Serif Tamil", serif; font-size: 1.5rem; }
+    header p { margin: 0; color: var(--gold-soft); font-size: 0.92rem; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 18px 40px -20px rgba(61, 6, 6, 0.45);
+      margin-bottom: 18px;
+    }
+    h2 { margin: 0 0 14px; font-size: 1.1rem; color: var(--maroon); }
+    label { display: block; font-weight: 600; font-size: 0.92rem; margin: 0 0 4px; }
+    input[type=text], input[type=password] {
+      width: 100%; padding: 12px 14px; margin: 0 0 14px;
+      border: 1.5px solid var(--line); border-radius: 12px;
+      font: inherit; background: #fff;
+    }
+    input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(217, 164, 65, 0.25); }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 13px 18px; border: 0; border-radius: 999px;
+      background: var(--maroon); color: #fff; font: inherit; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+    }
+    .btn:disabled { opacity: 0.6; cursor: wait; }
+    .btn-gold { background: linear-gradient(180deg, #f0c060, var(--gold)); color: var(--maroon-deep); }
+    .btn-plain { background: transparent; color: var(--maroon); border: 1.5px solid var(--maroon); }
+    .msg { margin: 10px 0 0; font-size: 0.92rem; }
+    .msg.err { color: var(--err); }
+    .msg.ok { color: var(--ok); }
+    .picker {
+      display: block; padding: 28px 16px; text-align: center; cursor: pointer;
+      border: 2px dashed rgba(107, 15, 15, 0.35); border-radius: 16px; background: #fff8ec;
+    }
+    .picker strong { display: block; font-size: 1.05rem; color: var(--maroon); }
+    .picker span { font-size: 0.85rem; color: var(--muted); }
+    .picker input { display: none; }
+    .list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+    .item { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #eee2cc; }
+    .item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .item .st {
+      position: absolute; inset: auto 0 0 0; padding: 3px 6px;
+      font-size: 0.75rem; font-weight: 700; color: #fff; background: rgba(0, 0, 0, 0.55); text-align: center;
+    }
+    .item.done .st { background: rgba(31, 122, 58, 0.9); }
+    .item.fail .st { background: rgba(179, 38, 30, 0.92); }
+    .item .del {
+      position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; border: 0; border-radius: 50%;
+      background: rgba(179, 38, 30, 0.92); color: #fff; font-size: 16px; cursor: pointer;
+    }
+    .row { display: flex; gap: 10px; margin-top: 14px; }
+    .row .btn { flex: 1; }
+    .who { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 12px; }
+    .who button { border: 0; background: none; color: var(--maroon); font: inherit; font-weight: 700; cursor: pointer; }
+    .hint { font-size: 0.85rem; color: var(--muted); margin: 12px 0 0; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="/header%20pic/head.jpeg" alt="">
+      <h1>புகைப்படம் பதிவேற்றம்</h1>
+      <p>அக்கினீஸ்வரர் ஆலயம் · உழவாரபணி குழு · Photo Upload</p>
+    </header>
+
+    <!-- LOGIN -->
+    <form class="card" id="loginCard" autocomplete="on">
+      <h2>உள்நுழைக / Login</h2>
+      <label for="user">பயனர் பெயர் / Username</label>
+      <input type="text" id="user" autocapitalize="none" autocomplete="username" required>
+      <label for="pass">கடவுச்சொல் / Password</label>
+      <input type="password" id="pass" autocomplete="current-password" required>
+      <button class="btn" id="loginBtn" type="submit">உள்நுழைக / Login</button>
+      <p class="msg err" id="loginMsg" hidden></p>
+    </form>
+
+    <!-- UPLOAD -->
+    <section class="card" id="uploadCard" hidden>
+      <div class="who"><span id="whoLabel"></span><button type="button" id="logout">வெளியேறு / Logout</button></div>
+      <label class="picker">
+        <input type="file" id="files" accept="image/*" multiple>
+        <strong>📷 புகைப்படங்களைத் தேர்ந்தெடுக்கவும்</strong>
+        <span>Tap to choose photos (many at once is fine)</span>
+      </label>
+      <div class="list" id="queue"></div>
+      <p class="msg" id="uploadMsg" hidden></p>
+      <div class="row">
+        <a class="btn btn-gold" href="/#photos">🛕 இணையதளத்தில் பார்க்க / View on site</a>
+      </div>
+      <p class="hint">புகைப்படங்கள் உடனே இணையதளத்தின் "புகைப்படங்கள்" பகுதியில் தோன்றும். Photos appear on the website straight away.</p>
+    </section>
+
+    <!-- ADMIN: manage uploaded photos -->
+    <section class="card" id="adminCard" hidden>
+      <h2>பதிவேற்றிய புகைப்படங்கள் / Uploaded photos</h2>
+      <p class="hint" style="margin:0 0 4px">Admin only: tap ✕ to remove a photo from the website.</p>
+      <div class="list" id="manage"></div>
+      <p class="msg" id="manageMsg" hidden></p>
+    </section>
+  </div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let creds = null;
+let role = null;
+
+function save(key, value) { try { value === null ? sessionStorage.removeItem(key) : sessionStorage.setItem(key, value); } catch (e) {} }
+function load(key) { try { return sessionStorage.getItem(key); } catch (e) { return null; } }
+
+function headers() { return { "x-user": creds.user, "x-pass": creds.pass }; }
+
+function show(el, text, kind) {
+  el.textContent = text;
+  el.className = "msg" + (kind ? " " + kind : "");
+  el.hidden = !text;
+}
+
+async function login(user, pass, silent) {
+  const btn = $("loginBtn");
+  btn.disabled = true;
+  try {
+    const res = await fetch("/api/login", { method: "POST", headers: { "x-user": user, "x-pass": pass } });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Login failed");
+    creds = { user, pass };
+    role = data.role;
+    save("upl", JSON.stringify(creds));
+    $("loginCard").hidden = true;
+    $("uploadCard").hidden = false;
+    $("whoLabel").textContent = "👤 " + user + (role === "admin" ? " (admin)" : "");
+    if (role === "admin") { $("adminCard").hidden = false; loadManage(); }
+  } catch (err) {
+    save("upl", null);
+    if (!silent) show($("loginMsg"), "தவறான பயனர் பெயர் அல்லது கடவுச்சொல் / Wrong username or password", "err");
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+$("loginCard").addEventListener("submit", (e) => {
+  e.preventDefault();
+  show($("loginMsg"), "");
+  login($("user").value.trim(), $("pass").value, false);
+});
+
+$("logout").onclick = () => {
+  save("upl", null);
+  location.reload();
+};
+
+/* ---------- Shrink every photo to a JPEG of at most 2048px before sending ---------- */
+
+async function decode(file) {
+  if ("createImageBitmap" in window) {
+    try { return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) {}
+  }
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    return img;
+  } finally {
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+}
+
+async function toJpeg(file) {
+  const src = await decode(file);
+  const w = src.width, h = src.height;
+  const scale = Math.min(1, 2048 / Math.max(w, h));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.round(w * scale);
+  canvas.height = Math.round(h * scale);
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(src, 0, 0, canvas.width, canvas.height);
+  for (const q of [0.85, 0.7, 0.55]) {
+    const blob = await new Promise((r) => canvas.toBlob(r, "image/jpeg", q));
+    if (blob && blob.size < 5.5 * 1024 * 1024) return blob;
+  }
+  throw new Error("too large");
+}
+
+function tile(container, src) {
+  const div = document.createElement("div");
+  div.className = "item";
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = "";
+  const st = document.createElement("div");
+  st.className = "st";
+  div.append(img, st);
+  container.prepend(div);
+  return { div, st };
+}
+
+$("files").addEventListener("change", async (e) => {
+  const files = [...e.target.files];
+  e.target.value = "";
+  if (!files.length) return;
+  show($("uploadMsg"), "");
+  let ok = 0, failed = 0;
+
+  for (const file of files) {
+    const preview = URL.createObjectURL(file);
+    const t = tile($("queue"), preview);
+    t.st.textContent = "பதிவேற்றுகிறது… / Uploading…";
+    try {
+      const jpeg = await toJpeg(file);
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: { ...headers(), "Content-Type": "image/jpeg" },
+        body: jpeg,
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401) { save("upl", null); throw new Error("Please log in again"); }
+      if (!res.ok) throw new Error(data.error || "Upload failed");
+      t.div.classList.add("done");
+      t.st.textContent = "✓ சேர்க்கப்பட்டது / Added";
+      ok++;
+    } catch (err) {
+      t.div.classList.add("fail");
+      t.st.textContent = err.message === "too large" ? "✕ Too large" : "✕ " + (err.message || "Failed");
+      failed++;
+    }
+  }
+
+  if (failed) show($("uploadMsg"), `${ok} சேர்க்கப்பட்டது, ${failed} தோல்வி / ${ok} added, ${failed} failed. Try the failed ones again or send them as JPG.`, "err");
+  else show($("uploadMsg"), `✓ ${ok} புகைப்படம் சேர்க்கப்பட்டது / ${ok} photo(s) added`, "ok");
+  if (role === "admin") loadManage();
+});
+
+/* ---------- Admin: list + delete ---------- */
+
+async function loadManage() {
+  const box = $("manage");
+  try {
+    const res = await fetch("/api/photos", { cache: "no-store" });
+    const { photos = [] } = await res.json();
+    box.innerHTML = "";
+    if (!photos.length) { show($("manageMsg"), "இன்னும் புகைப்படம் இல்லை / No uploaded photos yet."); return; }
+    show($("manageMsg"), "");
+    photos.slice().reverse().forEach((p) => {
+      const t = tile(box, p.url);
+      t.st.textContent = p.key.slice(6, 8) + "/" + p.key.slice(4, 6) + "/" + p.key.slice(0, 4);
+      const del = document.createElement("button");
+      del.className = "del";
+      del.type = "button";
+      del.textContent = "✕";
+      del.title = "Delete";
+      del.onclick = async () => {
+        if (!confirm("இந்த புகைப்படத்தை நீக்கவா? / Delete this photo from the website?")) return;
+        del.disabled = true;
+        const r = await fetch("/api/photo/" + encodeURIComponent(p.key), { method: "DELETE", headers: headers() });
+        if (r.ok) t.div.remove();
+        else { del.disabled = false; alert("Delete failed"); }
+      };
+      t.div.appendChild(del);
+    });
+  } catch (err) {
+    show($("manageMsg"), "Could not load photos.", "err");
+  }
+}
+
+/* ---------- Stay logged in for this browser tab ---------- */
+try {
+  const saved = JSON.parse(load("upl") || "null");
+  if (saved && saved.user) {
+    $("user").value = saved.user;
+    login(saved.user, saved.pass, true);
+  }
+} catch (e) {}
+</script>
+</body>
+</html>
