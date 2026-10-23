@@ -249,7 +249,7 @@ $("files").addEventListener("change", async (e) => {
   for (const file of files) {
     const preview = URL.createObjectURL(file);
     const t = tile($("queue"), preview);
-    t.st.textContent = "பதிவேற்றுகிறது… / Uploading…";
+    t.st.textContent = "⏳ …";
     try {
       const jpeg = await toJpeg(file);
       const res = await fetch("/api/upload", {
@@ -261,7 +261,7 @@ $("files").addEventListener("change", async (e) => {
       if (res.status === 401) { save("upl", null); throw new Error("Please log in again"); }
       if (!res.ok) throw new Error(data.error || "Upload failed");
       t.div.classList.add("done");
-      t.st.textContent = "✓ சேர்க்கப்பட்டது / Added";
+      t.st.textContent = "✓ Added";
       ok++;
     } catch (err) {
       t.div.classList.add("fail");
